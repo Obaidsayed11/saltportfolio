@@ -4,7 +4,7 @@ export const portfolioApi = BaseApi.injectEndpoints({
   endpoints: (builder) => ({
     getPortfolioData: builder.query({
       query: (tenure) => ({
-        url: `portfolio?tenure=${tenure}`,
+        url: `/api/v1/portfolio?tenure=${tenure}`,
         method: "GET",
       }),
     }),
