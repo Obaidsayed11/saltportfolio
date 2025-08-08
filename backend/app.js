@@ -11,7 +11,7 @@ app.use(express.static("public"))
 
 app.use(
   cors({
-    origin:process.env.ORIGIN    ,
+    origin:'https://saltportfolio-frontend.onrender.com',
     credentials: true, 
     methods: ["GET", "POST", "PUT", "DELETE"], 
 
