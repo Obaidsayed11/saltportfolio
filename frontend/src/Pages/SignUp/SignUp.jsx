@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { useRegisterUserMutation } from "../../redux/Slice/Auth.Slice";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
+
 
 const SignUp = () => {
   const [form, setForm] = useState({
@@ -19,6 +21,9 @@ const SignUp = () => {
   const [errors, setErrors] = useState({});
   const [registerUser] = useRegisterUserMutation();
   const navigate = useNavigate();
+  const [showPassword, setShowPassword] = useState(false);
+const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
 
  const validate = () => {
   const newErrors = {};
@@ -160,24 +165,44 @@ const SignUp = () => {
       {errors.email && <p className="text-red-500 text-xs">{errors.email}</p>}
 
       {/* Password */}
-      <input
-        type="password"
-        name="password"
-        placeholder="Password"
-        className="w-full p-3 border rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500"
-        onChange={handleInputChange}
-      />
-      {errors.password && <p className="text-red-500 text-xs">{errors.password}</p>}
+    <div className="relative">
+  <input
+    type={showPassword ? "text" : "password"}
+    name="password"
+    placeholder="Password"
+    className="w-full p-3 border rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500 pr-10"
+    onChange={handleInputChange}
+  />
+  <div
+    onClick={() => setShowPassword(!showPassword)}
+    className="absolute top-1/2 right-3 transform -translate-y-1/2 cursor-pointer text-gray-500"
+  >
+    {showPassword ? <FaEyeSlash /> : <FaEye />}
+  </div>
+  {errors.password && (
+    <p className="text-red-500 text-xs mt-1">{errors.password}</p>
+  )}
+</div>
 
-      {/* Confirm Password */}
-      <input
-        type="password"
-        name="confirmPassword"
-        placeholder="Confirm Password"
-        className="w-full p-3 border rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500"
-        onChange={handleInputChange}
-      />
-      {errors.confirmPassword && <p className="text-red-500 text-xs">{errors.confirmPassword}</p>}
+{/* Confirm Password */}
+<div className="relative">
+  <input
+    type={showConfirmPassword ? "text" : "password"}
+    name="confirmPassword"
+    placeholder="Confirm Password"
+    className="w-full p-3 border rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500 pr-10"
+    onChange={handleInputChange}
+  />
+  <div
+    onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+    className="absolute top-1/2 right-3 transform -translate-y-1/2 cursor-pointer text-gray-500"
+  >
+    {showConfirmPassword ? <FaEyeSlash /> : <FaEye />}
+  </div>
+  {errors.confirmPassword && (
+    <p className="text-red-500 text-xs mt-1">{errors.confirmPassword}</p>
+  )}
+</div>
 
       {/* Phone Number */}
       <input

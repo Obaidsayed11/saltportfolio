@@ -3,6 +3,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 const BaseApi = createApi({
     reducerPath: "baseApi",
     baseQuery: fetchBaseQuery({
+        // baseUrl: "http://localhost:7000/api/v1/",
         baseUrl: "https://saltportfolio-backend.onrender.com",
         credentials: 'include',
     prepareHeaders: (

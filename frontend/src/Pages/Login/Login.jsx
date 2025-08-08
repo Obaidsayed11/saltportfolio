@@ -5,10 +5,12 @@ import { LoginSetToken } from "../../redux/Slice/Token.Slice";
 import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 import { toast } from "sonner";
+import { FaEye, FaEyeSlash } from "react-icons/fa"; // 👈 import icons
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false); // 👈 toggle state
   const [loginUser] = useLoginUserMutation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -37,7 +39,6 @@ const Login = () => {
         throw new Error("Token missing in response");
       }
 
-      // Save token to cookies and redux
       Cookies.set("token", token);
       dispatch(LoginSetToken({ token, data: userData }));
 
@@ -60,10 +61,9 @@ const Login = () => {
         <h2 className="text-2xl font-bold text-center text-gray-800">
           Welcome Back 👋
         </h2>
+
         <div>
-          <label className="block text-sm font-medium text-gray-700">
-            Email
-          </label>
+          <label className="block text-sm font-medium text-gray-700">Email</label>
           <input
             type="email"
             placeholder="you@example.com"
@@ -72,24 +72,31 @@ const Login = () => {
             onChange={(e) => setEmail(e.target.value)}
           />
         </div>
-        <div>
-          <label className="block text-sm font-medium text-gray-700">
-            Password
-          </label>
+
+        <div className="relative">
+          <label className="block text-sm font-medium text-gray-700">Password</label>
           <input
-            type="password"
+            type={showPassword ? "text" : "password"}
             placeholder="••••••••"
-            className="w-full p-3 mt-1 border rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500"
+            className="w-full p-3 mt-1 border rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500 pr-10"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
+          <div
+            onClick={() => setShowPassword(!showPassword)}
+            className="absolute top-[42px] right-3 cursor-pointer text-gray-500 "
+          >
+            {showPassword ? <FaEyeSlash  /> : <FaEye />}
+          </div>
         </div>
+
         <button
           type="submit"
           className="w-full bg-purple-600 text-white py-3 rounded-xl hover:bg-purple-700 transition"
         >
           Login
         </button>
+
         <p className="text-center text-sm text-gray-600">
           Don't have an account?{" "}
           <a
